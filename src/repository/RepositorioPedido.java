@@ -94,7 +94,7 @@ public class RepositorioPedido implements Repositorio<Pedido> {
                 String nomeCliente = d[1];
                 String endereco = d[2];
 
-                Pessoa cliente = new Pessoa(0, nomeCliente, "CLIENTE");
+                Pessoa cliente = new Pessoa(0, nomeCliente, Modelo.TipoPessoa.CLIENTE);
                 Pedido pedido = new Pedido(numero, cliente, endereco);
 
                 if (d.length >= 4 && !d[3].trim().isEmpty()) {

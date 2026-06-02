@@ -78,7 +78,7 @@ public class ControladorPessoa {
                 DesignUI.abrirCaixa("Pessoa");
                 DesignUI.linhaCaixa("Código", String.valueOf(p.getCodigo()));
                 DesignUI.linhaCaixa("Nome  ", p.getNome());
-                DesignUI.linhaCaixa("Tipo  ", p.getTipoPessoa());
+                DesignUI.linhaCaixa("Tipo  ", p.getTipoPessoa().name());
                 DesignUI.fecharCaixa();
                 DesignUI.espaco();
             }

@@ -6,7 +6,7 @@ import java.util.List;
 public class Pessoa extends Entidade {
 
     private String nome;
-    private String tipoPessoa; // CLIENTE, FORNECEDOR, AMBOS
+    private TipoPessoa tipoPessoa; // CLIENTE, FORNECEDOR, AMBOS
     private List<Endereco> enderecos;
 
     public Pessoa() {
@@ -16,7 +16,14 @@ public class Pessoa extends Entidade {
     public Pessoa(int codigo, String nome, String tipoPessoa) {
         super(codigo);
         this.nome = nome;
-        this.tipoPessoa = tipoPessoa.toUpperCase();
+        this.tipoPessoa = TipoPessoa.fromString(tipoPessoa);
+        this.enderecos = new ArrayList<>();
+    }
+
+    public Pessoa(int codigo, String nome, TipoPessoa tipoPessoa) {
+        super(codigo);
+        this.nome = nome;
+        this.tipoPessoa = tipoPessoa;
         this.enderecos = new ArrayList<>();
     }
 
@@ -31,9 +38,12 @@ public class Pessoa extends Entidade {
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
-    public String getTipoPessoa() { return tipoPessoa; }
+    public TipoPessoa getTipoPessoa() { return tipoPessoa; }
     public void setTipoPessoa(String tipoPessoa) {
-        this.tipoPessoa = tipoPessoa.toUpperCase();
+        this.tipoPessoa = TipoPessoa.fromString(tipoPessoa);
+    }
+    public void setTipoPessoa(TipoPessoa tipoPessoa) {
+        this.tipoPessoa = tipoPessoa;
     }
 
     @Override

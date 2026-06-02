@@ -37,7 +37,7 @@ public class ControladorPedido {
 
         int codCli = Utilitario.Teclado.lerIntPositivo("Código do Cliente:");
         Pessoa cliente = pRepo.buscarPorCodigo(codCli);
-        if (cliente == null || cliente.getTipoPessoa().equalsIgnoreCase("FORNECEDOR")) {
+        if (cliente == null || cliente.getTipoPessoa() == Modelo.TipoPessoa.FORNECEDOR) {
             DesignUI.erro("Cliente inválido.");
             return;
         }

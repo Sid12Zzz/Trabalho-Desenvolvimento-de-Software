@@ -36,7 +36,7 @@ public class ControladorProduto {
         int fornCod  = Utilitario.Teclado.lerIntPositivo("Código do Fornecedor:");
 
         Pessoa fornecedor = pRepo.buscarPorCodigo(fornCod);
-        if (fornecedor == null || fornecedor.getTipoPessoa().equalsIgnoreCase("CLIENTE")) {
+        if (fornecedor == null || fornecedor.getTipoPessoa() == Modelo.TipoPessoa.CLIENTE) {
             DesignUI.erro("Fornecedor inválido ou não cadastrado.");
             return;
         }
@@ -90,7 +90,7 @@ public class ControladorProduto {
         int fornCod  = Utilitario.Teclado.lerIntPositivo("Código do Fornecedor:");
 
         Pessoa forn = pRepo.buscarPorCodigo(fornCod);
-        if (forn == null || forn.getTipoPessoa().equalsIgnoreCase("CLIENTE")) {
+        if (forn == null || forn.getTipoPessoa() == Modelo.TipoPessoa.CLIENTE) {
             DesignUI.erro("Fornecedor inválido ou não cadastrado.");
             return;
         }
