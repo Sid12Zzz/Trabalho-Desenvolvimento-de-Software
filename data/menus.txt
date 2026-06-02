@@ -12,12 +12,12 @@
 
 9  - Cadastrar Pedido
 10 - Listar Pedidos
-14 - Alterar Pedido
-15 - Excluir Pedido
+11 - Alterar Pedido
+12 - Excluir Pedido
 
-11 - Listar Endereços
-12 - Alterar Endereço
-13 - Excluir Endereço
+13 - Listar Endereços
+14 - Alterar Endereço
+15 - Excluir Endereço
 
 0 - Sair
 

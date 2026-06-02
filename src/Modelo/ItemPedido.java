@@ -20,11 +20,11 @@ public class ItemPedido {
     public int getQuantidade()                 { return quantidade; }
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
-        // CORRIGIDO: recalcula subtotal sempre que a quantidade mudar
         if (this.produto != null) {
             this.subtotal = this.produto.getPrecoVenda() * quantidade;
         }
     }
 
-    public double getSubtotal() { return subtotal; }
+    public double getSubtotal()                { return subtotal; }
+    public void setSubtotal(double subtotal)   { this.subtotal = subtotal; }
 }

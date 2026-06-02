@@ -51,7 +51,6 @@ public class RepositorioPedido implements Repositorio<Pedido> {
 
     @Override
     public void salvar(Pedido pedido) {
-        // CORREÇÃO AQUI: Usando getNumeroPedido() do código original do seu colega
         if (numeroExiste(pedido.getNumeroPedido())) {
             throw new IllegalArgumentException("Já existe um pedido com o número " + pedido.getNumeroPedido());
         }
@@ -69,7 +68,6 @@ public class RepositorioPedido implements Repositorio<Pedido> {
                 if (i < pedido.getItens().size() - 1) strItens.append("|");
             }
 
-            // CORREÇÃO AQUI: getNumeroPedido()
             pw.println(pedido.getNumeroPedido() + ";" +
                     pedido.getCliente().getNome() + ";" +
                     pedido.getEnderecoEntrega() + ";" +
@@ -89,31 +87,51 @@ public class RepositorioPedido implements Repositorio<Pedido> {
             while ((linha = br.readLine()) != null) {
                 if (linha.trim().isEmpty()) continue;
                 String[] d = linha.split(";");
+                if (d.length < 3) continue;
 
-                int numero = Integer.parseInt(d[0]);
+                int numero;
+                try {
+                    numero = Integer.parseInt(d[0].trim());
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+
                 String nomeCliente = d[1];
-                String endereco = d[2];
+                String endereco    = d[2];
 
                 Pessoa cliente = new Pessoa(0, nomeCliente, Modelo.TipoPessoa.CLIENTE);
-                Pedido pedido = new Pedido(numero, cliente, endereco);
+                Pedido pedido  = new Pedido(numero, cliente, endereco);
 
                 if (d.length >= 4 && !d[3].trim().isEmpty()) {
                     String[] itensStr = d[3].split("\\|");
                     for (String itemStr : itensStr) {
                         String[] p = itemStr.split(":");
-                        if (p.length >= 3) {
-                            int codProduto = Integer.parseInt(p[0].trim());
-                            int qtd = Integer.parseInt(p[1].trim());
+                        if (p.length < 3) continue;
 
-                            Produto produto = null;
-                            if (produtoRepo != null) {
-                                produto = produtoRepo.buscarPorCodigo(codProduto);
-                            }
-                            if (produto == null) {
-                                produto = new Produto(codProduto, "Produto Excluído", 0, 0, 0);
-                            }
-                            pedido.adicionarItem(new ItemPedido(produto, qtd));
+                        int codProduto;
+                        int qtd;
+                        double subtotal;
+
+                        try {
+                            codProduto = Integer.parseInt(p[0].trim());
+                            qtd        = Integer.parseInt(p[1].trim());
+                            subtotal   = Double.parseDouble(p[2].trim());
+                        } catch (NumberFormatException e) {
+                            continue;
                         }
+
+                        Produto produto = null;
+                        if (produtoRepo != null) {
+                            produto = produtoRepo.buscarPorCodigo(codProduto);
+                        }
+                        if (produto == null) {
+                            double precoUnitario = qtd > 0 ? subtotal / qtd : 0;
+                            produto = new Produto(codProduto, "Produto #" + codProduto, 0, precoUnitario, 0);
+                        }
+
+                        ItemPedido item = new ItemPedido(produto, qtd);
+                        item.setSubtotal(subtotal);
+                        pedido.adicionarItem(item);
                     }
                 }
                 lista.add(pedido);
@@ -138,10 +156,7 @@ public class RepositorioPedido implements Repositorio<Pedido> {
     public Pedido buscarPorNumero(int numero) {
         List<Pedido> todos = listar();
         for (Pedido p : todos) {
-            // CORREÇÃO AQUI: getNumeroPedido()
-            if (p.getNumeroPedido() == numero) {
-                return p;
-            }
+            if (p.getNumeroPedido() == numero) return p;
         }
         return null;
     }

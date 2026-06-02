@@ -1,10 +1,9 @@
 package Utilitario;
-// resto do arquivo permanece igual
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-public class  GerenciadorMenu {
+public class GerenciadorMenu {
 
     private static final String ARQUIVO = "./data/menus.txt";
 
@@ -25,16 +24,16 @@ public class  GerenciadorMenu {
                 int sep = linha.indexOf(" - ");
                 if (sep == -1) continue;
 
-                String num    = linha.substring(0, sep).trim();
-                String descr  = linha.substring(sep + 3).trim();
+                String num   = linha.substring(0, sep).trim();
+                String descr = linha.substring(sep + 3).trim();
                 int opcao;
                 try { opcao = Integer.parseInt(num); }
                 catch (NumberFormatException e) { continue; }
 
                 if      (opcao >= 1  && opcao <= 4  && pi  < 4) { pessoasItens [pi++]  = new String[]{num, descr}; }
                 else if (opcao >= 5  && opcao <= 8  && pri < 4) { produtosItens[pri++] = new String[]{num, descr}; }
-                else if ((opcao == 9 || opcao == 10 || opcao == 14 || opcao == 15) && pei < 4) { pedidosItens [pei++] = new String[]{num, descr}; }
-                else if (opcao >= 11 && opcao <= 13 && ei  < 3) { endItens     [ei++]  = new String[]{num, descr}; }
+                else if (opcao >= 9  && opcao <= 12 && pei < 4) { pedidosItens [pei++] = new String[]{num, descr}; }
+                else if (opcao >= 13 && opcao <= 15 && ei  < 3) { endItens     [ei++]  = new String[]{num, descr}; }
             }
         } catch (Exception e) {
             DesignUI.erro("Erro ao carregar menus.txt: " + e.getMessage());
