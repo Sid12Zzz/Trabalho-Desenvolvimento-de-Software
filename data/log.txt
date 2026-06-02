@@ -59,3 +59,7 @@
 [INFO] 2026-05-31T13:49:28.959055200 - Pessoa cadastrada: 321
 [INFO] 2026-05-31T13:51:52.850691 - Endereco cadastrado
 [INFO] 2026-05-31T13:51:54.540250300 - Pessoa cadastrada: 5
+[INFO] 2026-06-02T17:46:13.699097600 - Endereco cadastrado
+[INFO] 2026-06-02T17:46:30.526211100 - Endereco cadastrado
+[INFO] 2026-06-02T17:46:32.303364100 - Pessoa cadastrada: 333
+[INFO] 2026-06-02T17:47:17.253261700 - Pessoa alterada: 333

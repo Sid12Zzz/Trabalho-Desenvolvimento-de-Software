@@ -92,7 +92,7 @@ public class ControladorPessoa {
         int codigo = Utilitario.Teclado.lerIntPositivo("Código da pessoa:");
 
         String nome = Utilitario.Teclado.lerNome("Novo nome:");
-        String tipo = Utilitario.Teclado.lerOpcao("Novo vínculo:", new String[]{"CLIENTE", "FORNECEDOR", "AMBOS"});
+        String tipo = Utilitario.Teclado.lerOpcao("Novo vínculo: \"CLIENTE\", \"FORNECEDOR\", \"AMBOS\"", new String[]{"CLIENTE", "FORNECEDOR", "AMBOS"});
 
         try {
             pRepo.alterar(codigo, nome, tipo);

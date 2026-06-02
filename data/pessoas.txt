@@ -28,9 +28,9 @@
 36;Papelaria Central;FORNECEDOR
 37;Mercado do Bairro;AMBOS
 38;Construtora Aliança;FORNECEDOR
-
 50;Mauricio;AMBOS
 123;Vinciius Lima pereira;AMBOS
 1;Patrick Rodrigues;CLIENTE
 321;ssssd;CLIENTE
 5;...;AMBOS
+333;sidnei alves dos anjos junior;CLIENTE
