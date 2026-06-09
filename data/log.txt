@@ -90,3 +90,7 @@
 [INFO] 03/06/2026 02:39:25 - Endereco cadastrado
 [INFO] 03/06/2026 02:39:47 - Endereco alterado
 [INFO] 05/06/2026 18:00:14 - Pessoa alterada: cod=1 novoNome=Ralfe Antonio
+[INFO] 08/06/2026 19:12:46 - Endereco excluído
+[INFO] 08/06/2026 19:31:22 - Endereco cadastrado
+[INFO] 08/06/2026 19:43:36 - Pedido cadastrado: num=33 cliente=cod9
+[INFO] 08/06/2026 19:44:57 - Pedido cadastrado: num=33 cliente=cod9

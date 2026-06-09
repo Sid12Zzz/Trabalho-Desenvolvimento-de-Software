@@ -6,6 +6,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//Não herda nenhuma interface pois elas se baseiam em um codigo.
+//Coisa que os endereços não tem. (Se indetificam pelo CEP + PESSOA)
 public class RepositorioEndereco {
 
     private static final String ARQUIVO = "./data/enderecos.txt";
