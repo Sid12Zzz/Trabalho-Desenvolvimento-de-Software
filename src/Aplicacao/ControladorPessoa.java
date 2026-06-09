@@ -216,7 +216,7 @@ public class ControladorPessoa {
 
         String cep = null;
         while (true) {
-            String entrada = Teclado.lerCep("CEP do endereço a alterar (apenas números ou 0 para cancelar):");
+            String entrada = Teclado.lerCepOuCancelar("CEP do endereço a alterar (8 números ou 0 para cancelar):");
             if (entrada.equals("0")) {
                 DesignUI.info("Operação cancelada.");
                 return;

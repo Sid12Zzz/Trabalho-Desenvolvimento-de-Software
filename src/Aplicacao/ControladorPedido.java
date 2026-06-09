@@ -38,7 +38,7 @@ public class ControladorPedido {
 
         String cep = null;
         while (true) {
-            String entrada = Teclado.lerCep("CEP para entrega (apenas números ou 0 para cancelar):");
+            String entrada = Teclado.lerCepOuCancelar("CEP para entrega (8 números ou 0 para cancelar):");
             if (entrada.equals("0")) {
                 DesignUI.info("Operação cancelada.");
                 return;
@@ -53,7 +53,6 @@ public class ControladorPedido {
         Pedido pedido = new Pedido(numero, cliente, cep);
 
         int itensQtd = Teclado.lerIntPositivo("Quantidade de itens diferentes:");
-        int itensAdicionados = 0;
 
         for (int i = 0; i < itensQtd; i++) {
             int pCod  = Teclado.lerIntPositivo("Cód. Produto " + (i + 1) + ":");
@@ -61,7 +60,6 @@ public class ControladorPedido {
             if (p != null) {
                 int q = Teclado.lerIntPositivo("Quantidade:");
                 pedido.adicionarItem(new ItemPedido(p, q));
-                itensAdicionados++;
                 DesignUI.info(p.getDescricao() + " — " + DesignUI.formatarMoeda(p.getPrecoVenda()) + " x " + q);
             } else {
                 DesignUI.erro("Produto não encontrado. Item ignorado.");
@@ -146,7 +144,7 @@ public class ControladorPedido {
 
         String novoCep = null;
         while (true) {
-            String entrada = Teclado.lerCep("Novo CEP de entrega (apenas números ou 0 para cancelar):");
+            String entrada = Teclado.lerCepOuCancelar("Novo CEP de entrega (8 números ou 0 para cancelar):");
             if (entrada.equals("0")) {
                 DesignUI.info("Operação cancelada.");
                 return;

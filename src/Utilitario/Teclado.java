@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class Teclado {
 
-    // O Scanner fica encapsulado e protegido aqui dentro
     private static final Scanner sc = new Scanner(System.in).useLocale(Locale.US);
 
     public static String lerLinha() {
@@ -68,11 +67,27 @@ public class Teclado {
         }
     }
 
+    /** Lê um CEP de 8 dígitos. Rejeita entradas inválidas em loop. */
     public static String lerCep(String msg) {
         while (true) {
             String cep = lerTexto(msg).replaceAll("[^0-9]", "");
             if (cep.length() == 8) return cep;
             DesignUI.erro("CEP inválido. Digite exatamente 8 números.");
+        }
+    }
+
+    /**
+     * Lê um CEP de 8 dígitos OU retorna "0" se o usuário digitar apenas "0".
+     * Usado para operações que permitem cancelamento.
+     */
+    public static String lerCepOuCancelar(String msg) {
+        while (true) {
+            DesignUI.prompt(msg);
+            String entrada = sc.nextLine().trim();
+            if (entrada.equals("0")) return "0";
+            String cep = entrada.replaceAll("[^0-9]", "");
+            if (cep.length() == 8) return cep;
+            DesignUI.erro("CEP inválido. Digite 8 números ou 0 para cancelar.");
         }
     }
 
