@@ -2,11 +2,12 @@ package Modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import repository.Validavel;
 
-public class Pessoa extends Entidade {
+public class Pessoa extends Entidade implements Validavel {
 
     private String nome;
-    private TipoPessoa tipoPessoa; // CLIENTE, FORNECEDOR, AMBOS
+    private TipoPessoa tipoPessoa;
     private List<Endereco> enderecos;
 
     public Pessoa() {
@@ -27,13 +28,27 @@ public class Pessoa extends Entidade {
         this.enderecos = new ArrayList<>();
     }
 
+    @Override
+    public boolean isValido() {
+        if (nome == null || nome.trim().isEmpty()) return false;
+        if (nome.matches("\\d+")) return false;
+        if (tipoPessoa == null) return false;
+        return true;
+    }
+
+    @Override
+    public String getMensagemErro() {
+        if (nome == null || nome.trim().isEmpty()) return "Nome não pode ser vazio.";
+        if (nome.matches("\\d+")) return "Nome não pode ser apenas números.";
+        if (tipoPessoa == null) return "Tipo de pessoa não informado.";
+        return "";
+    }
+
     public void adicionarEndereco(Endereco endereco) {
         this.enderecos.add(endereco);
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
-    }
+    public List<Endereco> getEnderecos() { return enderecos; }
 
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }

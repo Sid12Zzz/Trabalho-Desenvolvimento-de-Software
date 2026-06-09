@@ -17,7 +17,20 @@ public class RepositorioPedido implements Repositorio<Pedido> {
 
     private static final String ARQUIVO = "./data/pedidos.txt";
     private static final String TEMP    = "./data/temp_pedidos.txt";
+
+    // Singleton
+    private static RepositorioPedido instancia;
+
     private RepositorioProduto produtoRepo;
+
+    private RepositorioPedido() {}
+
+    public static RepositorioPedido getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioPedido();
+        }
+        return instancia;
+    }
 
     public void setProdutoRepository(RepositorioProduto produtoRepo) {
         this.produtoRepo = produtoRepo;
@@ -67,7 +80,6 @@ public class RepositorioPedido implements Repositorio<Pedido> {
         if (pedido.getItens().isEmpty()) {
             throw new IllegalArgumentException("O pedido deve ter pelo menos um item.");
         }
-
         try (FileWriter fw = new FileWriter(ARQUIVO, true); PrintWriter pw = new PrintWriter(fw)) {
             StringBuilder strItens = new StringBuilder();
             for (int i = 0; i < pedido.getItens().size(); i++) {
@@ -77,8 +89,6 @@ public class RepositorioPedido implements Repositorio<Pedido> {
                         .append(":").append(String.format("%.2f", item.getSubtotal()));
                 if (i < pedido.getItens().size() - 1) strItens.append("|");
             }
-
-            // formato: numeroPedido;codCliente;nomeCliente;cepEntrega;itens;total
             pw.println(pedido.getNumeroPedido() + ";" +
                     pedido.getCliente().getCodigo() + ";" +
                     pedido.getCliente().getNome() + ";" +
@@ -176,7 +186,7 @@ public class RepositorioPedido implements Repositorio<Pedido> {
                 String[] d = linha.split(";");
                 try {
                     if (Integer.parseInt(d[0].trim()) == numeroBusca) {
-                        d[3] = novoEndereco;   // índice 3 = cep (agora que temos codCliente em d[1])
+                        d[3] = novoEndereco;
                         pw.println(String.join(";", d));
                     } else {
                         pw.println(linha);

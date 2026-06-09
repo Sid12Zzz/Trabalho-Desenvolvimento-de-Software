@@ -11,6 +11,18 @@ public class RepositorioProduto implements Repositorio<Produto>, Buscavel<Produt
     private static final String ARQUIVO = "./data/produtos.txt";
     private static final String TEMP    = "./data/temp_produtos.txt";
 
+    // Singleton
+    private static RepositorioProduto instancia;
+
+    private RepositorioProduto() {}
+
+    public static RepositorioProduto getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioProduto();
+        }
+        return instancia;
+    }
+
     @Override
     public boolean codigoExiste(int codigo) {
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {
@@ -68,7 +80,6 @@ public class RepositorioProduto implements Repositorio<Produto>, Buscavel<Produt
         if (produto.getCusto() < 0 || produto.getPrecoVenda() < 0) {
             throw new IllegalArgumentException("Custo e preço não podem ser negativos.");
         }
-
         try (FileWriter fw = new FileWriter(ARQUIVO, true); PrintWriter pw = new PrintWriter(fw)) {
             pw.println(produto.getCodigo() + ";" + produto.getDescricao() + ";" +
                     produto.getCusto() + ";" + produto.getPrecoVenda() + ";" +

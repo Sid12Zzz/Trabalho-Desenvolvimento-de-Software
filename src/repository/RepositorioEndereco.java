@@ -6,14 +6,23 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//Não herda nenhuma interface pois elas se baseiam em um codigo.
-//Coisa que os endereços não tem. (Se indetificam pelo CEP + PESSOA)
 public class RepositorioEndereco {
 
     private static final String ARQUIVO = "./data/enderecos.txt";
     private static final String TEMP    = "./data/temp_enderecos.txt";
 
-    // Normaliza o CEP removendo qualquer caractere que não seja número
+    // Singleton
+    private static RepositorioEndereco instancia;
+
+    private RepositorioEndereco() {}
+
+    public static RepositorioEndereco getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioEndereco();
+        }
+        return instancia;
+    }
+
     private String normalizarCep(String cep) {
         return cep == null ? "" : cep.replaceAll("[^0-9]", "");
     }
@@ -50,7 +59,6 @@ public class RepositorioEndereco {
         } catch (Exception e) { throw new RuntimeException("Erro ao salvar endereço."); }
     }
 
-    // Retorna os dados em forma de Array de Strings para o Controlador desenhar
     public List<String[]> listarTodos() {
         List<String[]> lista = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {

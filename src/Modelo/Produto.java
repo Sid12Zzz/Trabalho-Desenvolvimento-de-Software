@@ -1,6 +1,8 @@
 package Modelo;
 
-public class Produto extends Entidade {
+import repository.Validavel;
+
+public class Produto extends Entidade implements Validavel {
 
     private String descricao;
     private double custo;
@@ -16,6 +18,24 @@ public class Produto extends Entidade {
         this.custo = custo;
         this.precoVenda = precoVenda;
         this.codigoFornecedor = codigoFornecedor;
+    }
+
+    @Override
+    public boolean isValido() {
+        if (descricao == null || descricao.trim().isEmpty()) return false;
+        if (custo < 0) return false;
+        if (precoVenda <= 0) return false;
+        if (codigoFornecedor <= 0) return false;
+        return true;
+    }
+
+    @Override
+    public String getMensagemErro() {
+        if (descricao == null || descricao.trim().isEmpty()) return "Descrição não pode ser vazia.";
+        if (custo < 0) return "Custo não pode ser negativo.";
+        if (precoVenda <= 0) return "Preço de venda deve ser maior que zero.";
+        if (codigoFornecedor <= 0) return "Código do fornecedor inválido.";
+        return "";
     }
 
     public String getDescricao()               { return descricao; }

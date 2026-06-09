@@ -11,6 +11,18 @@ public class RepositorioPessoa implements Repositorio<Pessoa>, Buscavel<Pessoa> 
     private static final String ARQUIVO = "./data/pessoas.txt";
     private static final String TEMP    = "./data/temp_pessoas.txt";
 
+    // Singleton
+    private static RepositorioPessoa instancia;
+
+    private RepositorioPessoa() {}
+
+    public static RepositorioPessoa getInstancia() {
+        if (instancia == null) {
+            instancia = new RepositorioPessoa();
+        }
+        return instancia;
+    }
+
     @Override
     public boolean codigoExiste(int codigo) {
         try (BufferedReader br = new BufferedReader(new FileReader(ARQUIVO))) {
@@ -127,7 +139,6 @@ public class RepositorioPessoa implements Repositorio<Pessoa>, Buscavel<Pessoa> 
         GerenciadorLog.registrar("Pessoa excluída: cod=" + codigoBusca);
     }
 
-    /** Verifica se há pedidos vinculados ao código da pessoa (compara por código, não por nome). */
     public boolean pessoaTemPedido(int codigoPessoa) {
         try (BufferedReader br = new BufferedReader(new FileReader("./data/pedidos.txt"))) {
             String linha;
@@ -135,7 +146,6 @@ public class RepositorioPessoa implements Repositorio<Pessoa>, Buscavel<Pessoa> 
                 if (linha.trim().isEmpty()) continue;
                 String[] d = linha.split(";");
                 if (d.length < 2) continue;
-                // formato do pedido: numero;codCliente;cep;itens;total
                 try {
                     if (Integer.parseInt(d[1].trim()) == codigoPessoa) return true;
                 } catch (NumberFormatException ignored) {}

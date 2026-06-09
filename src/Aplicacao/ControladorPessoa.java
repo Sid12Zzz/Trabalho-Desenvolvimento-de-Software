@@ -10,13 +10,8 @@ import Utilitario.Teclado;
 
 public class ControladorPessoa {
 
-    private final RepositorioPessoa pRepo;
-    private final RepositorioEndereco eRepo;
-
-    public ControladorPessoa(RepositorioPessoa pRepo, RepositorioEndereco eRepo) {
-        this.pRepo = pRepo;
-        this.eRepo = eRepo;
-    }
+    private final RepositorioPessoa pRepo   = RepositorioPessoa.getInstancia();
+    private final RepositorioEndereco eRepo = RepositorioEndereco.getInstancia();
 
     public void cadastrar() {
         DesignUI.subtitulo("Novo Cadastro de Pessoa");
@@ -32,7 +27,6 @@ public class ControladorPessoa {
                 new String[]{"CLIENTE", "FORNECEDOR", "AMBOS"});
         Pessoa pessoa = new Pessoa(codigo, nome, tipo);
 
-        // Cadastro de pelo menos um endereço
         String continuar = "S";
         while (continuar.equals("S")) {
             String cep = Teclado.lerCep("CEP (apenas números):");
@@ -93,7 +87,6 @@ public class ControladorPessoa {
         DesignUI.subtitulo("Atualização de Cadastro");
         int codigo = Teclado.lerIntPositivo("Código da pessoa:");
 
-        // BUG CORRIGIDO: verifica existência ANTES de pedir os novos dados
         if (!pRepo.codigoExiste(codigo)) {
             DesignUI.erro("Pessoa com código " + codigo + " não encontrada.");
             return;
@@ -140,8 +133,6 @@ public class ControladorPessoa {
         }
     }
 
-    // ─── ENDEREÇOS ────────────────────────────────────────────────
-
     public void cadastrarEndereco() {
         DesignUI.subtitulo("Cadastrar Endereço");
         int cod = Teclado.lerIntPositivo("Cód. Pessoa:");
@@ -181,7 +172,6 @@ public class ControladorPessoa {
                 return;
             }
             for (String[] d : enderecos) {
-                // tenta mostrar nome da pessoa junto ao código
                 String nomePessoa = "";
                 try {
                     Pessoa p = pRepo.buscarPorCodigo(Integer.parseInt(d[0].trim()));
@@ -237,7 +227,6 @@ public class ControladorPessoa {
         DesignUI.subtitulo("Excluir Endereço");
         int cod = Teclado.lerIntPositivo("Cód. Pessoa:");
 
-        // BUG CORRIGIDO: verifica se pessoa existe
         if (!pRepo.codigoExiste(cod)) {
             DesignUI.erro("Pessoa com código " + cod + " não encontrada.");
             return;
@@ -245,7 +234,6 @@ public class ControladorPessoa {
 
         String cep = Teclado.lerCep("CEP (apenas números):");
 
-        // BUG CORRIGIDO: verifica se o CEP realmente pertence a esta pessoa
         if (!eRepo.cepJaExiste(cod, cep)) {
             DesignUI.erro("Esta pessoa não possui endereço com o CEP " + cep + ".");
             return;

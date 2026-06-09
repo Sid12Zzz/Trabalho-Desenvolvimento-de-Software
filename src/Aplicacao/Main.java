@@ -8,15 +8,11 @@ import Utilitario.GerenciadorMenu;
 public class Main {
 
     public static void main(String[] args) {
-        RepositorioPessoa   pRepo    = new RepositorioPessoa();
-        RepositorioEndereco eRepo    = new RepositorioEndereco();
-        RepositorioProduto  prodRepo = new RepositorioProduto();
-        RepositorioPedido   pedRepo  = new RepositorioPedido();
-        pedRepo.setProdutoRepository(prodRepo);
+        RepositorioPedido.getInstancia().setProdutoRepository(RepositorioProduto.getInstancia());
 
-        ControladorPessoa  pessoaCtrl  = new ControladorPessoa(pRepo, eRepo);
-        ControladorProduto produtoCtrl = new ControladorProduto(prodRepo, pRepo, pedRepo);
-        ControladorPedido  pedidoCtrl  = new ControladorPedido(pedRepo, pRepo, prodRepo, eRepo);
+        ControladorPessoa  pessoaCtrl  = new ControladorPessoa();
+        ControladorProduto produtoCtrl = new ControladorProduto();
+        ControladorPedido  pedidoCtrl  = new ControladorPedido();
 
         int opcao = -1;
 
@@ -43,7 +39,7 @@ public class Main {
                 case 11: pedidoCtrl.alterar();           break;
                 case 12: pedidoCtrl.excluir();           break;
                 case 13: pessoaCtrl.listarEnderecos();   break;
-                case 14: pessoaCtrl.cadastrarEndereco(); break;  // NOVO
+                case 14: pessoaCtrl.cadastrarEndereco(); break;
                 case 15: pessoaCtrl.alterarEndereco();   break;
                 case 16: pessoaCtrl.excluirEndereco();   break;
                 case 0:

@@ -14,18 +14,10 @@ import Utilitario.Teclado;
 
 public class ControladorPedido {
 
-    private final RepositorioPedido pedRepo;
-    private final RepositorioPessoa pRepo;
-    private final RepositorioProduto prodRepo;
-    private final RepositorioEndereco eRepo;
-
-    public ControladorPedido(RepositorioPedido pedRepo, RepositorioPessoa pRepo,
-                             RepositorioProduto prodRepo, RepositorioEndereco eRepo) {
-        this.pedRepo  = pedRepo;
-        this.pRepo    = pRepo;
-        this.prodRepo = prodRepo;
-        this.eRepo    = eRepo;
-    }
+    private final RepositorioPedido pedRepo   = RepositorioPedido.getInstancia();
+    private final RepositorioPessoa pRepo     = RepositorioPessoa.getInstancia();
+    private final RepositorioProduto prodRepo = RepositorioProduto.getInstancia();
+    private final RepositorioEndereco eRepo   = RepositorioEndereco.getInstancia();
 
     public void cadastrar() {
         DesignUI.subtitulo("Abertura de Novo Pedido");
@@ -44,13 +36,10 @@ public class ControladorPedido {
 
         DesignUI.info("Cliente identificado: " + cliente.getNome());
 
-        // BUG 1 CORRIGIDO: loop até acertar um CEP válido do cliente
         String cep;
         while (true) {
             cep = Teclado.lerCep("CEP para entrega (apenas números):");
-            if (eRepo.cepJaExiste(codCli, cep)) {
-                break;
-            }
+            if (eRepo.cepJaExiste(codCli, cep)) break;
             DesignUI.erro("CEP não cadastrado para este cliente. Tente novamente.");
         }
 
@@ -148,13 +137,10 @@ public class ControladorPedido {
         int codCliente = pedido.getCliente().getCodigo();
         DesignUI.info("Pedido de: " + pedido.getCliente().getNome());
 
-        // BUG 2 CORRIGIDO: loop até informar um CEP válido do cliente
         String novoCep;
         while (true) {
             novoCep = Teclado.lerCep("Novo CEP de entrega (apenas números):");
-            if (eRepo.cepJaExiste(codCliente, novoCep)) {
-                break;
-            }
+            if (eRepo.cepJaExiste(codCliente, novoCep)) break;
             DesignUI.erro("CEP não cadastrado para este cliente. Tente novamente.");
         }
 

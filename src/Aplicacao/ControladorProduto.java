@@ -11,15 +11,9 @@ import Utilitario.Teclado;
 
 public class ControladorProduto {
 
-    private final RepositorioProduto prodRepo;
-    private final RepositorioPessoa pRepo;
-    private final RepositorioPedido pedRepo;
-
-    public ControladorProduto(RepositorioProduto prodRepo, RepositorioPessoa pRepo, RepositorioPedido pedRepo) {
-        this.prodRepo = prodRepo;
-        this.pRepo    = pRepo;
-        this.pedRepo  = pedRepo;
-    }
+    private final RepositorioProduto prodRepo = RepositorioProduto.getInstancia();
+    private final RepositorioPessoa pRepo     = RepositorioPessoa.getInstancia();
+    private final RepositorioPedido pedRepo   = RepositorioPedido.getInstancia();
 
     public void cadastrar() {
         DesignUI.subtitulo("Novo Cadastro de Produto");
@@ -86,7 +80,6 @@ public class ControladorProduto {
         DesignUI.subtitulo("Alterar Produto");
         int codigo = Teclado.lerIntPositivo("Código do Produto:");
 
-        // BUG CORRIGIDO: verifica existência ANTES de pedir novos dados
         if (!prodRepo.codigoExiste(codigo)) {
             DesignUI.erro("Produto com código " + codigo + " não encontrado.");
             return;
